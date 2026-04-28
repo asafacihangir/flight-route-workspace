@@ -94,6 +94,8 @@ secrets/
 .docker/
 docker-compose.override.yml
 docker-compose.override.yaml
+deployment/docker-compose/docker-conf/
+deployment/docker-compose/docker-mounted/
 
 # ===== Testing / Coverage =====
 .nyc_output/
