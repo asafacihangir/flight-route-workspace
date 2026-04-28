@@ -95,13 +95,4 @@ public class TransportationService {
         return locationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Location not found with id: " + id));
     }
-
-    private LocationEntity getLocationReference(Long id) {
-        LocationEntity referenceById = locationRepository.getReferenceById(id);
-        if (referenceById == null) {
-            throw new ResourceNotFoundException("Location not found with id: " + id);
-        }
-
-        return referenceById;
-    }
 }
