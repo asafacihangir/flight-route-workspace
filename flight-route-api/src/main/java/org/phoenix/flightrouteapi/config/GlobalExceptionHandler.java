@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -55,6 +56,15 @@ class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getMessage());
         pd.setTitle("Conflict");
         pd.setProperty("errors", List.of(e.getMessage()));
+        pd.setProperty("timestamp", Instant.now());
+        return pd;
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ProblemDetail handle(AccessDeniedException e) {
+        log.warn("Access denied: {}", e.getMessage());
+        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, "Access denied");
+        pd.setTitle("Forbidden");
         pd.setProperty("timestamp", Instant.now());
         return pd;
     }

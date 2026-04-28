@@ -4,12 +4,15 @@ import org.phoenix.flightrouteapi.BaseIT;
 import org.phoenix.flightrouteapi.location.service.LocationService;
 import org.phoenix.flightrouteapi.location.service.dtos.LocationVM;
 import org.phoenix.flightrouteapi.location.web.dtos.LocationRequest;
+import org.phoenix.flightrouteapi.security.domain.Role;
+import org.phoenix.flightrouteapi.transportation.service.TransportationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.client.ExchangeResult;
 
@@ -22,9 +25,22 @@ class LocationControllerIT extends BaseIT {
     @Autowired
     private LocationService locationService;
 
+    @Autowired
+    private TransportationService transportationService;
+
+    private String adminToken;
+    private String agencyToken;
+
     @BeforeEach
-    void cleanDb() {
+    void setUp() {
+        transportationService.findAll().forEach(vm -> transportationService.delete(vm.id()));
         locationService.findAll().forEach(vm -> locationService.delete(vm.id()));
+        adminToken = seedUserAndLogin("admin-it", Role.ADMIN);
+        agencyToken = seedUserAndLogin("agency-it", Role.AGENCY);
+    }
+
+    private String bearer(String token) {
+        return "Bearer " + token;
     }
 
     @Test
@@ -32,6 +48,7 @@ class LocationControllerIT extends BaseIT {
         LocationVM response = restTestClient
                 .post()
                 .uri("/api/locations")
+                .header(HttpHeaders.AUTHORIZATION, bearer(adminToken))
                 .contentType(MediaType.APPLICATION_JSON)
                 .body("""
                         {
@@ -60,6 +77,7 @@ class LocationControllerIT extends BaseIT {
         LocationVM response = restTestClient
                 .post()
                 .uri("/api/locations")
+                .header(HttpHeaders.AUTHORIZATION, bearer(adminToken))
                 .contentType(MediaType.APPLICATION_JSON)
                 .body("""
                         {
@@ -91,6 +109,7 @@ class LocationControllerIT extends BaseIT {
         ExchangeResult result = restTestClient
                 .post()
                 .uri("/api/locations")
+                .header(HttpHeaders.AUTHORIZATION, bearer(adminToken))
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new ReqBody(name, country, city, code))
                 .exchange()
@@ -108,6 +127,7 @@ class LocationControllerIT extends BaseIT {
         restTestClient
                 .post()
                 .uri("/api/locations")
+                .header(HttpHeaders.AUTHORIZATION, bearer(adminToken))
                 .contentType(MediaType.APPLICATION_JSON)
                 .body("""
                         {
@@ -129,6 +149,7 @@ class LocationControllerIT extends BaseIT {
         List<LocationVM> all = restTestClient
                 .get()
                 .uri("/api/locations")
+                .header(HttpHeaders.AUTHORIZATION, bearer(adminToken))
                 .exchange()
                 .expectStatus().isOk()
                 .returnResult(new ParameterizedTypeReference<List<LocationVM>>() {})
@@ -145,6 +166,7 @@ class LocationControllerIT extends BaseIT {
         LocationVM found = restTestClient
                 .get()
                 .uri("/api/locations/{id}", created.id())
+                .header(HttpHeaders.AUTHORIZATION, bearer(adminToken))
                 .exchange()
                 .expectStatus().isOk()
                 .returnResult(LocationVM.class)
@@ -160,6 +182,7 @@ class LocationControllerIT extends BaseIT {
         restTestClient
                 .get()
                 .uri("/api/locations/{id}", 999999)
+                .header(HttpHeaders.AUTHORIZATION, bearer(adminToken))
                 .exchange()
                 .expectStatus().isNotFound();
     }
@@ -171,6 +194,7 @@ class LocationControllerIT extends BaseIT {
         LocationVM updated = restTestClient
                 .put()
                 .uri("/api/locations/{id}", created.id())
+                .header(HttpHeaders.AUTHORIZATION, bearer(adminToken))
                 .contentType(MediaType.APPLICATION_JSON)
                 .body("""
                         {
@@ -198,6 +222,7 @@ class LocationControllerIT extends BaseIT {
         restTestClient
                 .put()
                 .uri("/api/locations/{id}", saw.id())
+                .header(HttpHeaders.AUTHORIZATION, bearer(adminToken))
                 .contentType(MediaType.APPLICATION_JSON)
                 .body("""
                         {
@@ -216,6 +241,7 @@ class LocationControllerIT extends BaseIT {
         restTestClient
                 .put()
                 .uri("/api/locations/{id}", 999999)
+                .header(HttpHeaders.AUTHORIZATION, bearer(adminToken))
                 .contentType(MediaType.APPLICATION_JSON)
                 .body("""
                         {
@@ -236,12 +262,14 @@ class LocationControllerIT extends BaseIT {
         restTestClient
                 .delete()
                 .uri("/api/locations/{id}", created.id())
+                .header(HttpHeaders.AUTHORIZATION, bearer(adminToken))
                 .exchange()
                 .expectStatus().isNoContent();
 
         restTestClient
                 .get()
                 .uri("/api/locations/{id}", created.id())
+                .header(HttpHeaders.AUTHORIZATION, bearer(adminToken))
                 .exchange()
                 .expectStatus().isNotFound();
     }
@@ -251,7 +279,58 @@ class LocationControllerIT extends BaseIT {
         restTestClient
                 .delete()
                 .uri("/api/locations/{id}", 999999)
+                .header(HttpHeaders.AUTHORIZATION, bearer(adminToken))
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void shouldReturn401WhenNoToken() {
+        restTestClient
+                .get()
+                .uri("/api/locations")
+                .exchange()
+                .expectStatus().isUnauthorized();
+    }
+
+    @Test
+    void shouldReturn403WhenAgencyListsLocations() {
+        restTestClient
+                .get()
+                .uri("/api/locations")
+                .header(HttpHeaders.AUTHORIZATION, bearer(agencyToken))
+                .exchange()
+                .expectStatus().isForbidden();
+    }
+
+    @Test
+    void shouldReturn403WhenAgencyCreatesLocation() {
+        restTestClient
+                .post()
+                .uri("/api/locations")
+                .header(HttpHeaders.AUTHORIZATION, bearer(agencyToken))
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("""
+                        {
+                          "name": "Forbidden Airport",
+                          "country": "Turkiye",
+                          "city": "Istanbul",
+                          "code": "FRB"
+                        }
+                        """)
+                .exchange()
+                .expectStatus().isForbidden();
+    }
+
+    @Test
+    void shouldReturn403WhenAgencyDeletesLocation() {
+        LocationVM created = locationService.create(new LocationRequest("Sabiha", "Turkiye", "Istanbul", "SAW"));
+
+        restTestClient
+                .delete()
+                .uri("/api/locations/{id}", created.id())
+                .header(HttpHeaders.AUTHORIZATION, bearer(agencyToken))
+                .exchange()
+                .expectStatus().isForbidden();
     }
 }

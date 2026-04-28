@@ -3,6 +3,7 @@ package org.phoenix.flightrouteapi.transportation.web.controllers;
 import org.phoenix.flightrouteapi.transportation.service.RouteService;
 import org.phoenix.flightrouteapi.transportation.service.dtos.RouteVM;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ class RouteController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN','AGENCY')")
     List<RouteVM> findRoutes(
             @RequestParam Long originId,
             @RequestParam Long destinationId,
