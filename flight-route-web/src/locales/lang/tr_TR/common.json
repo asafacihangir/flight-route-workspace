@@ -1,0 +1,19 @@
+{
+	"common": {
+		"okText": "Tamam",
+		"closeText": "Kapat",
+		"cancelText": "İptal",
+		"loadingText": "Yükleniyor...",
+		"saveText": "Kaydet",
+		"delText": "Sil",
+		"resetText": "Sıfırla",
+		"searchText": "Ara",
+		"queryText": "Ara",
+		"inputText": "Lütfen giriniz",
+		"chooseText": "Lütfen seçiniz",
+		"redo": "Yenile",
+		"back": "Geri",
+		"light": "Açık",
+		"dark": "Koyu"
+	}
+}

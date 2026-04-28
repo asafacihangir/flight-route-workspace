@@ -1,0 +1,107 @@
+version: '3'
+
+vars:
+  GOOS: "{{default OS .GOOS}}"
+  MVNW: '{{if eq .GOOS "windows"}}mvnw.cmd{{else}}./mvnw{{end}}'
+  API_DIR: "flight-route-api"
+  WEB_DIR: "flight-route-web"
+  DC_DIR: "deployment/docker-compose"
+  INFRA_DC_FILE: "{{.DC_DIR}}/infra.yml"
+  APPS_DC_FILE: "{{.DC_DIR}}/apps.yml"
+  MONITORING_DC_FILE: "{{.DC_DIR}}/monitoring.yml"
+  SLEEP_CMD: '{{if eq .GOOS "windows"}}timeout{{else}}sleep{{end}}'
+
+tasks:
+  default:
+    cmds:
+      - task: test
+
+  build_flight_route_api:
+    cmds:
+      - "docker build -t kafkascihangir/flight-route-api:latest {{.API_DIR}}"
+
+  build_flight_route_api_dev:
+    cmds:
+      - "docker build --build-arg RUNTIME_IMAGE=eclipse-temurin:25-jre -t kafkascihangir/flight-route-api:dev {{.API_DIR}}"
+
+  build_flight_route_web:
+    cmds:
+      - "docker build -t kafkascihangir/flight-route-web:latest {{.WEB_DIR}}"
+
+  build:
+    cmds:
+      - task: build_flight_route_api
+      - task: build_flight_route_web
+
+  remove_apps:
+    cmds:
+      - "docker rmi kafkascihangir/flight-route-api:latest"
+      - "docker rmi kafkascihangir/flight-route-web:latest"
+
+  start_apps:
+    deps: [ build ]
+    cmds:
+      - "docker compose -f {{.APPS_DC_FILE}} up -d"
+
+  stop_apps:
+    cmds:
+      - "docker compose -f {{.APPS_DC_FILE}} stop"
+      - "docker compose -f {{.APPS_DC_FILE}} rm -f"
+
+  restart_apps:
+    cmds:
+      - task: stop_apps
+      - task: sleep
+      - task: start_apps
+
+  start_infra:
+    cmds:
+      - "docker compose -f {{.INFRA_DC_FILE}} up -d"
+
+  stop_infra:
+    cmds:
+      - "docker compose -f {{.INFRA_DC_FILE}} stop"
+      - "docker compose -f {{.INFRA_DC_FILE}} rm -f"
+
+  restart_infra:
+    cmds:
+      - task: stop_infra
+      - task: sleep
+      - task: start_infra
+
+  start:api:
+    deps: [ build_flight_route_api, start_infra ]
+    cmds:
+      - "docker compose -f {{.INFRA_DC_FILE}} -f {{.APPS_DC_FILE}} up -d flight-route-api"
+
+  start:web:
+    deps: [ build_flight_route_web, build_flight_route_api, start_infra ]
+    cmds:
+      - "docker compose -f {{.INFRA_DC_FILE}} -f {{.APPS_DC_FILE}} up -d flight-route-web flight-route-api"
+
+  start:
+    deps: [ build ]
+    cmds:
+      - "docker compose -f {{.INFRA_DC_FILE}} -f {{.APPS_DC_FILE}} up -d"
+
+  stop:
+    cmds:
+      - "docker compose -f {{.INFRA_DC_FILE}} -f {{.APPS_DC_FILE}} stop"
+      - "docker compose -f {{.INFRA_DC_FILE}} -f {{.APPS_DC_FILE}} rm -f"
+
+  restart:
+    cmds:
+      - task: stop
+      - task: sleep
+      - task: start
+
+  test:
+    dir: "{{.API_DIR}}"
+    cmds:
+      - "{{.MVNW}} test"
+
+  sleep:
+    vars:
+      DURATION: "{{default 5 .DURATION}}"
+    cmds:
+      - "{{.SLEEP_CMD}} {{.DURATION}}"

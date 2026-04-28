@@ -1,0 +1,175 @@
+{
+	"sys": {
+		"api": {
+			"apiRequestFailed": "İstek başarısız oldu, lütfen daha sonra tekrar deneyin.",
+			"errorMessage": "İşlem başarısız, sistem hatası.",
+			"errorTip": "Hata",
+			"sessionExpired": "Oturumunuz sona erdi. Lütfen tekrar giriş yapın.",
+			"successTip": "Başarılı",
+			"timeoutMessage": "Oturum zaman aşımına uğradı, lütfen tekrar giriş yapın."
+		},
+		"docs": "Dokümantasyon",
+		"login": {
+			"accountPlaceholder": "Lütfen kullanıcı adınızı giriniz",
+			"loginButton": "Giriş Yap",
+			"loginSuccessDesc": "Tekrar hoş geldiniz",
+			"loginSuccessTitle": "Giriş başarılı",
+			"logout": "Çıkış Yap",
+			"password": "Şifre",
+			"passwordPlaceholder": "Lütfen şifrenizi giriniz",
+			"signInFormTitle": "Hesabınıza giriş yapın",
+			"signInFormDescription": "Hesabınıza giriş yapmak için kullanıcı adınızı girin",
+			"signInPrimaryTitle": "Tekrar Hoş Geldiniz",
+			"signInSecondTitle": "Uçuş rotası yönetim sistemi",
+			"userName": "Kullanıcı Adı",
+			"invalidCredentials": "Kullanıcı adı veya şifre hatalı.",
+			"invalidRequest": "Geçersiz istek. Lütfen tekrar deneyin.",
+			"networkError": "Bağlantı hatası. Lütfen tekrar deneyin."
+		},
+		"placeholder": {
+			"comingSoon": "Yakında eklenecek."
+		},
+		"location": {
+			"title": "Lokasyonlar",
+			"new": "Yeni Lokasyon",
+			"edit": "Lokasyonu Düzenle",
+			"delete": {
+				"title": "Lokasyonu sil",
+				"confirm": "\"{{name}}\" ({{code}}) silinecek. Bu işlem geri alınamaz."
+			},
+			"field": {
+				"name": "Ad",
+				"country": "Ülke",
+				"city": "Şehir",
+				"code": "Kod"
+			},
+			"error": {
+				"required": "Bu alan zorunludur.",
+				"codeFormat": "Kod 2-10 karakter büyük harf veya rakamdan oluşmalıdır.",
+				"duplicateCode": "Bu kod zaten kullanılıyor.",
+				"inUse": "Bu lokasyon aktif bir ulaşım tarafından kullanıldığı için silinemez.",
+				"notFound": "Bu kayıt artık mevcut değil. Liste yenilendi.",
+				"forbidden": "Bu işlemi yapmaya yetkiniz yok."
+			}
+		},
+		"transportation": {
+			"title": "Ulaşım",
+			"new": "Yeni Ulaşım",
+			"edit": "Ulaşımı Düzenle",
+			"empty": {
+				"noLocations": "Ulaşım eklemek için önce en az bir lokasyon tanımlamalısınız.",
+				"goToLocations": "Lokasyonlara Git"
+			},
+			"delete": {
+				"title": "Ulaşımı sil",
+				"confirm": "{{type}} {{originCode}} → {{destinationCode}} silinecek. Bu işlem geri alınamaz."
+			},
+			"field": {
+				"origin": "Kalkış",
+				"destination": "Varış",
+				"type": "Tip",
+				"operatingDays": "Çalışma Günleri",
+				"originPlaceholder": "Kalkış seçin",
+				"destinationPlaceholder": "Varış seçin",
+				"searchLocation": "Ad, şehir veya kod ile ara"
+			},
+			"type": {
+				"FLIGHT": "Uçak",
+				"BUS": "Otobüs",
+				"SUBWAY": "Metro",
+				"UBER": "Uber"
+			},
+			"day": {
+				"short": {
+					"1": "Pt",
+					"2": "Sa",
+					"3": "Ça",
+					"4": "Pe",
+					"5": "Cu",
+					"6": "Ct",
+					"7": "Pz"
+				},
+				"long": {
+					"1": "Pazartesi",
+					"2": "Salı",
+					"3": "Çarşamba",
+					"4": "Perşembe",
+					"5": "Cuma",
+					"6": "Cumartesi",
+					"7": "Pazar"
+				}
+			},
+			"preset": {
+				"everyDay": "Her gün",
+				"weekdays": "Hafta içi",
+				"weekends": "Hafta sonu"
+			},
+			"error": {
+				"required": "Bu alan zorunludur.",
+				"sameOriginDestination": "Kalkış ve varış aynı olamaz.",
+				"operatingDaysRequired": "En az bir çalışma günü seçin.",
+				"validation": "Lütfen form alanlarını kontrol edin.",
+				"notFound": "Bu kayıt artık mevcut değil. Liste yenilendi.",
+				"forbidden": "Bu işlemi yapmaya yetkiniz yok.",
+				"network": "Bağlantı hatası. Lütfen tekrar deneyin."
+			}
+		},
+		"routes": {
+			"title": "Rotalar",
+			"search": {
+				"origin": "Kalkış",
+				"destination": "Varış",
+				"date": "Seyahat tarihi",
+				"button": "Ara",
+				"placeholder": {
+					"origin": "Kalkış noktası seçin",
+					"destination": "Varış noktası seçin",
+					"date": "Tarih seçin",
+					"searchLocation": "Ad, şehir veya kod ile ara"
+				}
+			},
+			"error": {
+				"required": "Bu alan zorunlu",
+				"sameLocation": "Kalkış ve varış aynı olamaz",
+				"invalidParams": "Geçersiz parametre",
+				"locationNotFound": "Seçilen lokasyon bulunamadı, listeyi yenileyin",
+				"network": "Sunucuya ulaşılamadı",
+				"unknown": "Beklenmeyen bir hata oluştu",
+				"refresh": "Listeyi yenile",
+				"retry": "Tekrar dene"
+			},
+			"list": {
+				"title": "Uygun Rotalar",
+				"idle": "Lokasyon ve tarih seçip aramaya başlayın",
+				"empty": "Bu tarih için uygun route bulunamadı",
+				"via": "{{airport}} üzerinden",
+				"summary": "{{origin}} → {{destination}}"
+			},
+			"detail": {
+				"flightLeg": "Uçuş",
+				"transferLeg": "Transfer",
+				"operatingDays": "Çalışma günleri",
+				"day": {
+					"1": "Pzt",
+					"2": "Sal",
+					"3": "Çar",
+					"4": "Per",
+					"5": "Cum",
+					"6": "Cmt",
+					"7": "Paz"
+				}
+			}
+		},
+		"nav": {
+			"locations": "Lokasyonlar",
+			"transportations": "Ulaşım",
+			"routes": "Rotalar",
+			"operations": "Operasyonlar",
+			"management": "Yönetim",
+			"workbench": "Çalışma Alanı"
+		},
+		"settings": {
+			"title": "Ayarlar"
+		}
+	}
+}

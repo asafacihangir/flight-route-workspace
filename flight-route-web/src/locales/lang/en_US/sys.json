@@ -1,0 +1,278 @@
+{
+	"sys": {
+		"api": {
+			"apiRequestFailed": "The interface request failed, please try again later!",
+			"apiTimeoutMessage": "The interface request timed out, please refresh the page and try again!",
+			"errMsg401": "The user does not have permission (token, user name, password error)!",
+			"errMsg403": "The user is authorized, but access is forbidden!",
+			"errMsg404": "Network request error, the resource was not found!",
+			"errMsg405": "Network request error, request method not allowed!",
+			"errMsg408": "Network request timed out!",
+			"errMsg500": "Server error, please contact the administrator!",
+			"errMsg501": "The network is not implemented!",
+			"errMsg502": "Network Error!",
+			"errMsg503": "The service is unavailable, the server is temporarily overloaded or maintained!",
+			"errMsg504": "Network timeout!",
+			"errMsg505": "The http version does not support the request!",
+			"errorMessage": "The operation failed, the system is abnormal!",
+			"errorTip": "Error Tip",
+			"networkException": "network anomaly",
+			"networkExceptionMsg": "Please check if your network connection is normal! The network is abnormal",
+			"operationFailed": "Operation failed",
+			"operationSuccess": "Operation Success",
+			"sessionExpired": "Your session has expired. Please sign in again.",
+			"successTip": "Success Tip",
+			"timeoutMessage": "Login timed out, please log in again!"
+		},
+		"docs": "Document",
+		"login": {
+			"accountPlaceholder": "Please input username",
+			"loginButton": "Sign in",
+			"loginSuccessDesc": "Welcome back",
+			"loginSuccessTitle": "Login successful",
+			"logout": "Logout",
+			"password": "Password",
+			"passwordPlaceholder": "Please input password",
+			"signInDesc": "Enter your personal details and get started!",
+			"signInFormTitle": "Login to your account",
+			"signInPrimaryTitle": "Hi, Welcome Back",
+			"signInSecondTitle": "Flight route management system",
+			"userName": "Username",
+			"signInFormDescription": "Enter your username to login to your account",
+			"invalidCredentials": "Invalid username or password.",
+			"invalidRequest": "Invalid request. Please try again.",
+			"networkError": "Connection error. Please try again."
+		},
+		"placeholder": {
+			"comingSoon": "Coming soon."
+		},
+		"location": {
+			"title": "Locations",
+			"new": "New Location",
+			"edit": "Edit Location",
+			"delete": {
+				"title": "Delete location",
+				"confirm": "\"{{name}}\" ({{code}}) will be deleted. This action cannot be undone."
+			},
+			"field": {
+				"name": "Name",
+				"country": "Country",
+				"city": "City",
+				"code": "Code"
+			},
+			"error": {
+				"required": "This field is required.",
+				"codeFormat": "Code must be 2-10 uppercase letters or digits.",
+				"duplicateCode": "This code is already in use.",
+				"inUse": "This location is used by an active transportation and cannot be deleted.",
+				"notFound": "This location no longer exists. The list has been refreshed.",
+				"forbidden": "You do not have permission to perform this action."
+			}
+		},
+		"transportation": {
+			"title": "Transportations",
+			"new": "New Transportation",
+			"edit": "Edit Transportation",
+			"empty": {
+				"noLocations": "You must add at least one location before creating a transportation.",
+				"goToLocations": "Go to Locations"
+			},
+			"delete": {
+				"title": "Delete transportation",
+				"confirm": "{{type}} {{originCode}} → {{destinationCode}} will be deleted. This action cannot be undone."
+			},
+			"field": {
+				"origin": "Origin",
+				"destination": "Destination",
+				"type": "Type",
+				"operatingDays": "Operating Days",
+				"originPlaceholder": "Select origin",
+				"destinationPlaceholder": "Select destination",
+				"searchLocation": "Search by name, city or code"
+			},
+			"type": {
+				"FLIGHT": "Flight",
+				"BUS": "Bus",
+				"SUBWAY": "Subway",
+				"UBER": "Uber"
+			},
+			"day": {
+				"short": {
+					"1": "Mo",
+					"2": "Tu",
+					"3": "We",
+					"4": "Th",
+					"5": "Fr",
+					"6": "Sa",
+					"7": "Su"
+				},
+				"long": {
+					"1": "Monday",
+					"2": "Tuesday",
+					"3": "Wednesday",
+					"4": "Thursday",
+					"5": "Friday",
+					"6": "Saturday",
+					"7": "Sunday"
+				}
+			},
+			"preset": {
+				"everyDay": "Every day",
+				"weekdays": "Weekdays",
+				"weekends": "Weekends"
+			},
+			"error": {
+				"required": "This field is required.",
+				"sameOriginDestination": "Origin and destination must be different.",
+				"operatingDaysRequired": "Select at least one operating day.",
+				"validation": "Please review the form fields.",
+				"notFound": "This transportation no longer exists. The list has been refreshed.",
+				"forbidden": "You do not have permission to perform this action.",
+				"network": "Connection error. Please try again."
+			}
+		},
+		"routes": {
+			"title": "Routes",
+			"search": {
+				"origin": "Origin",
+				"destination": "Destination",
+				"date": "Trip date",
+				"button": "Search",
+				"placeholder": {
+					"origin": "Select origin",
+					"destination": "Select destination",
+					"date": "Pick a date",
+					"searchLocation": "Search by name, city or code"
+				}
+			},
+			"error": {
+				"required": "This field is required",
+				"sameLocation": "Origin and destination must differ",
+				"invalidParams": "Invalid parameters",
+				"locationNotFound": "Selected location not found, refresh the list",
+				"network": "Could not reach the server",
+				"unknown": "An unexpected error occurred",
+				"refresh": "Refresh",
+				"retry": "Retry"
+			},
+			"list": {
+				"title": "Available Routes",
+				"idle": "Pick locations and a date to start searching",
+				"empty": "No routes available for this date",
+				"via": "Via {{airport}}",
+				"summary": "{{origin}} → {{destination}}"
+			},
+			"detail": {
+				"flightLeg": "Flight",
+				"transferLeg": "Transfer",
+				"operatingDays": "Operating days",
+				"day": {
+					"1": "Mon",
+					"2": "Tue",
+					"3": "Wed",
+					"4": "Thu",
+					"5": "Fri",
+					"6": "Sat",
+					"7": "Sun"
+				}
+			}
+		},
+		"nav": {
+			"dashboard": "Dashboard",
+			"pages": "Pages",
+			"others": "Others",
+			"ui": "UI",
+			"custom_ui_components": "Custom UI Components",
+			"analysis": "Analysis",
+			"animate": "Animate",
+			"blank": "Blank",
+			"blog": "Blog",
+			"calendar": "Calendar",
+			"chart": "Chart",
+			"clipboard": "Clipboard",
+			"components": "Components",
+			"disabled": "Item Disabled",
+			"editor": "Editor",
+			"error": {
+				"403": "403",
+				"404": "404",
+				"500": "500",
+				"index": "Error Page"
+			},
+			"external_link": "External Link",
+			"link": "Item External",
+			"functions": "Functions",
+			"i18n": "Multi Language",
+			"icon": "Icon",
+			"iframe": "Iframe",
+			"kanban": "Kanban",
+			"label": "Item Label",
+			"locations": "Locations",
+			"transportations": "Transportations",
+			"routes": "Routes",
+			"operations": "Operations",
+			"permission": "Permission",
+			"permission.page_test": "Page Permission Test",
+			"management": "Management",
+			"markdown": "Markdown",
+			"menulevel": {
+				"1a": "Menu Level 1a",
+				"1b": {
+					"2a": "Menu Level 2a",
+					"2b": {
+						"3a": "Menu Level 3a",
+						"3b": "Menu Level 3b",
+						"index": "Menu Level 2b"
+					},
+					"index": "Menu Level 1b"
+				},
+				"index": "Menu Level"
+			},
+			"scroll": "Scroll",
+			"system": {
+				"index": "System",
+				"organization": "Organization",
+				"permission": "Permission",
+				"role": "Role",
+				"user": "User",
+				"user_detail": "User Detail"
+			},
+			"toast": "Toast",
+			"token_expired": "Token Expired",
+			"upload": "Upload",
+			"user": {
+				"account": "Account",
+				"index": "User",
+				"profile": "Profile"
+			},
+			"workbench": "Workbench"
+		},
+		"settings": {
+			"accordion": "Accordion Menu",
+			"breadcrumb": "BreadCrumb",
+			"darkSidebar": "Dark Sidebar",
+			"exitFullscreen": "Exit FullScreen",
+			"family": "Family",
+			"font": "Font",
+			"fullscreen": "FullScreen",
+			"layout": "Layout",
+			"mode": "Mode",
+			"multiTab": "Multi Tab",
+			"page": "Page",
+			"presetThemes": "Presets",
+			"size": "Size",
+			"stretch": "Stretch",
+			"stretchTip": "Only available when the screen width is greater than 1280px (xl)",
+			"title": "Settings"
+		},
+		"tab": {
+			"close": "Close",
+			"closeAll": "Close All",
+			"closeLeft": "Close Left",
+			"closeOthers": "Close Others",
+			"closeRight": "Close Right",
+			"fullscreen": "FullScreen",
+			"refresh": "Refresh"
+		}
+	}
+}

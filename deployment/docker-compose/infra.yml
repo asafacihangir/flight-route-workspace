@@ -1,0 +1,37 @@
+name: flight-route-project
+
+services:
+  flight-route-db:
+    image: mysql:latest
+    container_name: flight-route-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: HZk9vdm7qVPL3A6
+      MYSQL_DATABASE: flight_route
+      MYSQL_USER: phoenixsqluser
+      MYSQL_PASSWORD: phoenixsqluser
+    volumes:
+      - ~/flight-route-data:/var/lib/mysql
+    ports:
+      - "33055:3306"
+    networks:
+      - default
+
+  flight-route-cahce:
+    container_name: flight-route-cahce
+    image: bitnami/redis:latest
+    ports:
+      - "6379:6379"
+    restart: always
+    volumes:
+      - ./docker-mounted/redis:/bitnami/redis/data
+      - ./docker-mounted/logs:/bitnami/redis/logs
+      - ./docker-conf/redis/overrides.conf:/opt/bitnami/redis/mounted-etc/overrides.conf
+    environment:
+      - REDIS_PASSWORD=A;7=Uf/6<bp
+    networks:
+      - default
+
+networks:
+  default:
+    name: flight-route-project-network

@@ -1,0 +1,12 @@
+target/
+.idea/
+*.iml
+.git/
+.gitignore
+.mvn/wrapper/maven-wrapper.jar.lck
+doc/postman/
+deployment/
+doc/
+HELP.md
+*.md
+.sdkmanrc

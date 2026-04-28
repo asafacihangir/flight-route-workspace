@@ -1,0 +1,114 @@
+# ===== Agent / AI tooling =====
+.claude/
+.agent/
+.hitl/
+CLAUDE.md
+
+# ===== Project docs / specs (locally managed) =====
+docs/
+openspec/
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== IDE / Editor =====
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+*.swp
+*.swo
+*~
+
+# ===== Java / Maven (flight-route-api) =====
+target/
+build/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+.mvn/wrapper/maven-wrapper.jar
+dependency-reduced-pom.xml
+
+# ===== Gradle (if used) =====
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# ===== Spring Boot =====
+*.original
+application-local.yml
+application-local.yaml
+application-local.properties
+application-secret.*
+
+# ===== Node / Frontend (flight-route-web) =====
+node_modules/
+.pnp
+.pnp.js
+dist/
+dist-ssr/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+.turbo/
+.vite/
+coverage/
+*.tsbuildinfo
+
+# ===== Logs =====
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ===== Env / Secrets =====
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+*.p12
+*.keystore
+*.jks
+secrets/
+.secrets
+
+# ===== Docker =====
+.docker/
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# ===== Testing / Coverage =====
+.nyc_output/
+junit.xml
+test-results/
+playwright-report/
+playwright/.cache/
+
+# ===== Task / tmp =====
+.task/
+tmp/
+temp/
+*.tmp
+*.bak
+*.orig
+
+# ===== Lefthook / Git hooks cache =====
+.lefthook-local.yml

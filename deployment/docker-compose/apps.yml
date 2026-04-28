@@ -1,0 +1,40 @@
+name: flight-route-project
+
+services:
+  flight-route-api:
+    build:
+      context: ../../flight-route-api
+      dockerfile: Dockerfile
+    image: kafkascihangir/flight-route-api:latest
+    container_name: flight-route-api
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://flight-route-db:3306/flight_route
+      SPRING_DATASOURCE_USERNAME: phoenixsqluser
+      SPRING_DATASOURCE_PASSWORD: phoenixsqluser
+      SPRING_DATA_REDIS_HOST: flight-route-cahce
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_DATA_REDIS_PASSWORD: "A;7=Uf/6<bp"
+      CORS_ALLOWED_ORIGINS: "http://localhost:8081,http://localhost:3001"
+    networks:
+      - default
+
+  flight-route-web:
+    build:
+      context: ../../flight-route-web
+      dockerfile: Dockerfile
+    image: kafkascihangir/flight-route-web:latest
+    container_name: flight-route-web
+    restart: always
+    ports:
+      - "8081:80"
+    depends_on:
+      - flight-route-api
+    networks:
+      - default
+
+networks:
+  default:
+    name: flight-route-project-network
