@@ -32,6 +32,13 @@ export default function RoutesPage() {
 		setSearchParams(params);
 	};
 
+	const handleFiltersChange = () => {
+		if (searchParams !== null) {
+			setSearchParams(null);
+			setSelectedRoute(null);
+		}
+	};
+
 	return (
 		<div className="flex flex-col gap-4 p-4 md:p-6">
 			<Card>
@@ -44,6 +51,7 @@ export default function RoutesPage() {
 						loading={query.isFetching}
 						optionsLoading={optionsLoading}
 						onSearch={handleSearch}
+						onFiltersChange={handleFiltersChange}
 					/>
 				</CardContent>
 			</Card>

@@ -4,7 +4,7 @@ import type { Location } from "#/entity";
 import { LOCATIONS_QUERY_KEY, useLocationsQuery } from "@/pages/management/locations/use-locations";
 
 export interface LocationOption {
-	id: string;
+	id: number;
 	label: string;
 	code: string;
 	name: string;

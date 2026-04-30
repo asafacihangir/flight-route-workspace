@@ -6,8 +6,8 @@ export enum RouteApi {
 }
 
 export interface RouteSearchParams {
-	originId: string;
-	destinationId: string;
+	originId: number;
+	destinationId: number;
 	date: string; // YYYY-MM-DD
 }
 

@@ -27,7 +27,7 @@ interface TransportationFormModalProps {
 	open: boolean;
 	mode: TransportationFormMode;
 	locations: Location[];
-	defaultValues?: TransportationCreateInput | null;
+	defaultValues?: Partial<TransportationCreateInput> | null;
 	onSubmit: (data: TransportationCreateInput) => Promise<void>;
 	onClose: () => void;
 }
@@ -43,9 +43,16 @@ const TYPE_DOT: Record<TransportationType, string> = {
 	[TransportationType.UBER]: "bg-zinc-900 dark:bg-zinc-100",
 };
 
-const EMPTY_DEFAULTS: TransportationCreateInput = {
-	originId: "",
-	destinationId: "",
+type TransportationFormValues = {
+	originId?: number;
+	destinationId?: number;
+	type: TransportationType;
+	operatingDays: OperatingDay[];
+};
+
+const EMPTY_DEFAULTS: TransportationFormValues = {
+	originId: undefined,
+	destinationId: undefined,
 	type: TransportationType.FLIGHT,
 	operatingDays: [],
 };
@@ -64,8 +71,8 @@ export function TransportationFormModal({
 		() =>
 			z
 				.object({
-					originId: z.string().min(1, t("sys.transportation.error.required")),
-					destinationId: z.string().min(1, t("sys.transportation.error.required")),
+					originId: z.number({ required_error: t("sys.transportation.error.required") }).int().positive(t("sys.transportation.error.required")),
+					destinationId: z.number({ required_error: t("sys.transportation.error.required") }).int().positive(t("sys.transportation.error.required")),
 					type: z.nativeEnum(TransportationType),
 					operatingDays: z
 						.array(z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5), z.literal(6), z.literal(7)]))
@@ -78,21 +85,21 @@ export function TransportationFormModal({
 		[t],
 	);
 
-	const form = useForm<TransportationCreateInput>({
-		resolver: zodResolver(schema),
+	const form = useForm<TransportationFormValues>({
+		resolver: zodResolver(schema) as never,
 		defaultValues: defaultValues ?? EMPTY_DEFAULTS,
 		mode: "onSubmit",
 	});
 
 	useEffect(() => {
 		if (!open) return;
-		form.reset(mode === "edit" && defaultValues ? defaultValues : EMPTY_DEFAULTS);
+		form.reset(mode === "edit" && defaultValues ? { ...EMPTY_DEFAULTS, ...defaultValues } : EMPTY_DEFAULTS);
 	}, [open, mode, defaultValues, form]);
 
 	const isSubmitting = form.formState.isSubmitting;
 
 	const handleSubmit = form.handleSubmit(async (data) => {
-		await onSubmit(data);
+		await onSubmit(data as TransportationCreateInput);
 	});
 
 	const originId = form.watch("originId");
@@ -101,7 +108,7 @@ export function TransportationFormModal({
 
 	useEffect(() => {
 		if (originId && destinationId && originId === destinationId) {
-			form.setValue("destinationId", "", { shouldValidate: false });
+			form.setValue("destinationId", undefined, { shouldValidate: false });
 		}
 	}, [originId, destinationId, form]);
 
@@ -269,10 +276,10 @@ export function TransportationFormModal({
 }
 
 interface LocationComboboxProps {
-	value: string;
-	onChange: (value: string) => void;
+	value: number | undefined;
+	onChange: (value: number) => void;
 	locations: Location[];
-	excludeId?: string;
+	excludeId?: number;
 	placeholder: string;
 	searchPlaceholder: string;
 }

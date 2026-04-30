@@ -15,6 +15,7 @@ interface RouteSearchFormProps {
 	loading: boolean;
 	optionsLoading: boolean;
 	onSearch: (params: RouteSearchParams) => void;
+	onFiltersChange: () => void;
 }
 
 interface FormErrors {
@@ -24,10 +25,10 @@ interface FormErrors {
 	sameLocation?: string;
 }
 
-export function RouteSearchForm({ options, loading, optionsLoading, onSearch }: RouteSearchFormProps) {
+export function RouteSearchForm({ options, loading, optionsLoading, onSearch, onFiltersChange }: RouteSearchFormProps) {
 	const { t } = useTranslation();
-	const [originId, setOriginId] = useState<string | undefined>();
-	const [destinationId, setDestinationId] = useState<string | undefined>();
+	const [originId, setOriginId] = useState<number | undefined>();
+	const [destinationId, setDestinationId] = useState<number | undefined>();
 	const [date, setDate] = useState<Date | undefined>();
 	const [errors, setErrors] = useState<FormErrors>({});
 
@@ -44,8 +45,8 @@ export function RouteSearchForm({ options, loading, optionsLoading, onSearch }: 
 		if (Object.keys(next).length > 0) return;
 
 		onSearch({
-			originId: originId as string,
-			destinationId: destinationId as string,
+			originId: originId as number,
+			destinationId: destinationId as number,
 			date: format(date as Date, "yyyy-MM-dd"),
 		});
 	};
@@ -61,6 +62,7 @@ export function RouteSearchForm({ options, loading, optionsLoading, onSearch }: 
 					onChange={(v) => {
 						setOriginId(v);
 						setErrors((e) => ({ ...e, origin: undefined, sameLocation: undefined }));
+						onFiltersChange();
 					}}
 					options={options}
 					disabled={optionsLoading}
@@ -76,6 +78,7 @@ export function RouteSearchForm({ options, loading, optionsLoading, onSearch }: 
 					onChange={(v) => {
 						setDestinationId(v);
 						setErrors((e) => ({ ...e, destination: undefined, sameLocation: undefined }));
+						onFiltersChange();
 					}}
 					options={options}
 					disabled={optionsLoading}
@@ -90,6 +93,7 @@ export function RouteSearchForm({ options, loading, optionsLoading, onSearch }: 
 					onChange={(d) => {
 						setDate(d);
 						setErrors((e) => ({ ...e, date: undefined }));
+						onFiltersChange();
 					}}
 					error={errors.date}
 				/>
@@ -108,8 +112,8 @@ interface LocationFieldProps {
 	label: string;
 	placeholder: string;
 	searchPlaceholder: string;
-	value?: string;
-	onChange: (v: string) => void;
+	value?: number;
+	onChange: (v: number) => void;
 	options: LocationOption[];
 	disabled?: boolean;
 	error?: string;

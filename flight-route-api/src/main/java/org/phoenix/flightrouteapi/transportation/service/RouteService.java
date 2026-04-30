@@ -3,16 +3,20 @@ package org.phoenix.flightrouteapi.transportation.service;
 import org.phoenix.flightrouteapi.config.CacheConfig;
 import org.phoenix.flightrouteapi.location.repository.LocationRepository;
 import org.phoenix.flightrouteapi.shared.exceptions.ResourceNotFoundException;
+import org.phoenix.flightrouteapi.transportation.domain.TransportationType;
 import org.phoenix.flightrouteapi.transportation.service.dtos.RouteVM;
 import org.phoenix.flightrouteapi.transportation.domain.TransportationEntity;
 import org.phoenix.flightrouteapi.transportation.repository.TransportationRepository;
+import org.phoenix.flightrouteapi.transportation.service.dtos.TransportationVM;
 import org.phoenix.flightrouteapi.transportation.service.mapper.TransportationMapper;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RouteService {

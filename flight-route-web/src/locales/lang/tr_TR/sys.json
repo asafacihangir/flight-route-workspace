@@ -9,6 +9,12 @@
 			"timeoutMessage": "Oturum zaman aşımına uğradı, lütfen tekrar giriş yapın."
 		},
 		"docs": "Dokümantasyon",
+		"pagination": {
+			"rowsPerPage": "Sayfa başına satır:",
+			"of": "/",
+			"prev": "Önceki sayfa",
+			"next": "Sonraki sayfa"
+		},
 		"login": {
 			"accountPlaceholder": "Lütfen kullanıcı adınızı giriniz",
 			"loginButton": "Giriş Yap",
@@ -38,6 +44,7 @@
 				"confirm": "\"{{name}}\" ({{code}}) silinecek. Bu işlem geri alınamaz."
 			},
 			"field": {
+				"rowNumber": "Sıra No",
 				"name": "Ad",
 				"country": "Ülke",
 				"city": "Şehir",

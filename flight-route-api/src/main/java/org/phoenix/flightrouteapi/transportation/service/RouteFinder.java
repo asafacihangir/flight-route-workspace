@@ -17,6 +17,26 @@ public class RouteFinder {
                                                        Long originId,
                                                        Long destinationId,
                                                        LocalDate date) {
+
+
+
+        // Taksim
+
+        ///  Tasim - Sabiha (Uber)
+
+        // Sabiha - Londora (Flight)
+
+        //Londora - New York Havalima (Flight)
+
+        // New York Havalimanı - Beyaz Saray (Uber)
+
+        // Beyaz Saray
+
+
+
+
+        //destion'daki önceki fligtları bull
+
         int dayOfWeek = date.getDayOfWeek().getValue();
         List<TransportationEntity> available = all.stream()
                 .filter(t -> t.getOperatingDays().contains(dayOfWeek))
