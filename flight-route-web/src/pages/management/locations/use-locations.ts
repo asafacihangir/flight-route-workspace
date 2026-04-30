@@ -25,7 +25,7 @@ export function useCreateLocation() {
 export function useUpdateLocation() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: ({ id, data }: { id: string; data: LocationUpdateInput }) => locationService.update(id, data),
+		mutationFn: ({ id, data }: { id: number; data: LocationUpdateInput }) => locationService.update(id, data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: LOCATIONS_QUERY_KEY });
 		},
@@ -35,7 +35,7 @@ export function useUpdateLocation() {
 export function useDeleteLocation() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (id: string) => locationService.remove(id),
+		mutationFn: (id: number) => locationService.remove(id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: LOCATIONS_QUERY_KEY });
 		},

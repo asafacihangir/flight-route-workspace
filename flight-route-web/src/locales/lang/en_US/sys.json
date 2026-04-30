@@ -25,6 +25,12 @@
 			"timeoutMessage": "Login timed out, please log in again!"
 		},
 		"docs": "Document",
+		"pagination": {
+			"rowsPerPage": "Rows per page:",
+			"of": "of",
+			"prev": "Previous page",
+			"next": "Next page"
+		},
 		"login": {
 			"accountPlaceholder": "Please input username",
 			"loginButton": "Sign in",
@@ -55,6 +61,7 @@
 				"confirm": "\"{{name}}\" ({{code}}) will be deleted. This action cannot be undone."
 			},
 			"field": {
+				"rowNumber": "Row No",
 				"name": "Name",
 				"country": "Country",
 				"city": "City",

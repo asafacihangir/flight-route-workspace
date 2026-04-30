@@ -87,7 +87,7 @@ export type MenuTree = Menu & {
 };
 
 export interface Location {
-	id: string;
+	id: number;
 	name: string;
 	country: string;
 	city: string;
@@ -98,7 +98,7 @@ export type LocationCreateInput = Omit<Location, "id">;
 export type LocationUpdateInput = LocationCreateInput;
 
 export interface Transportation {
-	id: string;
+	id: number;
 	origin: Location;
 	destination: Location;
 	type: TransportationType;
@@ -106,8 +106,8 @@ export interface Transportation {
 }
 
 export interface TransportationCreateInput {
-	originId: string;
-	destinationId: string;
+	originId: number;
+	destinationId: number;
 	type: TransportationType;
 	operatingDays: OperatingDay[];
 }

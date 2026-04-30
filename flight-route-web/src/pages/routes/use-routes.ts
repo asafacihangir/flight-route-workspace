@@ -8,7 +8,6 @@ export function useRoutesQuery(params: RouteSearchParams | null) {
 	return useQuery<Route[]>({
 		queryKey: [ROUTES_QUERY_KEY, params?.originId, params?.destinationId, params?.date],
 		queryFn: () => routeService.list(params as RouteSearchParams),
-		enabled: params !== null,
-		staleTime: 5 * 60 * 1000,
+		enabled: params !== null
 	});
 }

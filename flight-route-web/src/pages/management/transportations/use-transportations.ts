@@ -25,7 +25,7 @@ export function useCreateTransportation() {
 export function useUpdateTransportation() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: ({ id, data }: { id: string; data: TransportationUpdateInput }) =>
+		mutationFn: ({ id, data }: { id: number; data: TransportationUpdateInput }) =>
 			transportationService.update(id, data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: TRANSPORTATIONS_QUERY_KEY });
@@ -36,7 +36,7 @@ export function useUpdateTransportation() {
 export function useDeleteTransportation() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (id: string) => transportationService.remove(id),
+		mutationFn: (id: number) => transportationService.remove(id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: TRANSPORTATIONS_QUERY_KEY });
 		},

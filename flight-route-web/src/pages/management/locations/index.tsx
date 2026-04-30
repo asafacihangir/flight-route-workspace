@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import type { Location, LocationCreateInput } from "#/entity";
 import { Icon } from "@/components/icon";
+import { RangePagination } from "@/components/range-pagination";
 import { Alert } from "@/ui/alert";
 import { Button } from "@/ui/button";
 import { Card, CardContent, CardHeader } from "@/ui/card";
@@ -26,6 +27,8 @@ export default function LocationsPage() {
 	const [editing, setEditing] = useState<Location | null>(null);
 	const [deleting, setDeleting] = useState<Location | null>(null);
 	const [deleteInUse, setDeleteInUse] = useState(false);
+	const [current, setCurrent] = useState(1);
+	const [pageSize, setPageSize] = useState(10);
 
 	const filtered = useMemo(() => {
 		const list = query.data ?? [];
@@ -35,6 +38,11 @@ export default function LocationsPage() {
 			[row.name, row.city, row.country, row.code].some((v) => v?.toLowerCase().includes(term)),
 		);
 	}, [query.data, search]);
+
+	const pagedData = useMemo(
+		() => filtered.slice((current - 1) * pageSize, current * pageSize),
+		[filtered, current, pageSize],
+	);
 
 	const handleCreate = async (data: LocationCreateInput) => {
 		try {
@@ -102,6 +110,12 @@ export default function LocationsPage() {
 	};
 
 	const columns: ColumnsType<Location> = [
+		{
+			title: t("sys.location.field.rowNumber"),
+			key: "rowNumber",
+			width: 80,
+			render: (_: unknown, __: Location, index: number) => (current - 1) * pageSize + index + 1,
+		},
 		{ title: t("sys.location.field.name"), dataIndex: "name", key: "name" },
 		{ title: t("sys.location.field.city"), dataIndex: "city", key: "city" },
 		{ title: t("sys.location.field.country"), dataIndex: "country", key: "country" },
@@ -159,10 +173,21 @@ export default function LocationsPage() {
 						size="small"
 						loading={query.isPending}
 						columns={columns}
-						dataSource={filtered}
-						pagination={{ pageSize: 10, showSizeChanger: true }}
+						dataSource={pagedData}
+						pagination={false}
 						scroll={{ x: "max-content" }}
 					/>
+					<div className="mt-3 flex justify-end">
+						<RangePagination
+							current={current}
+							pageSize={pageSize}
+							total={filtered.length}
+							onChange={(p, ps) => {
+								setCurrent(p);
+								setPageSize(ps);
+							}}
+						/>
+					</div>
 				</CardContent>
 			</Card>
 

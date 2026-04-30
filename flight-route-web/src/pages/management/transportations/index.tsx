@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import type { Transportation, TransportationCreateInput } from "#/entity";
 import { type OperatingDay, TransportationType } from "#/enum";
 import { Icon } from "@/components/icon";
+import { RangePagination } from "@/components/range-pagination";
 import { useLocationsQuery } from "@/pages/management/locations/use-locations";
 import { Button } from "@/ui/button";
 import { Card, CardContent, CardHeader } from "@/ui/card";
@@ -43,6 +44,8 @@ export default function TransportationsPage() {
 	const [creating, setCreating] = useState(false);
 	const [editing, setEditing] = useState<Transportation | null>(null);
 	const [deleting, setDeleting] = useState<Transportation | null>(null);
+	const [current, setCurrent] = useState(1);
+	const [pageSize, setPageSize] = useState(10);
 
 	const locations = locationsQuery.data ?? [];
 	const noLocations = !locationsQuery.isPending && locations.length === 0;
@@ -68,6 +71,11 @@ export default function TransportationsPage() {
 			return haystack.includes(term);
 		});
 	}, [query.data, search, t]);
+
+	const pagedData = useMemo(
+		() => filtered.slice((current - 1) * pageSize, current * pageSize),
+		[filtered, current, pageSize],
+	);
 
 	const handleSharedError = (code: ReturnType<typeof mapTransportationError>) => {
 		switch (code) {
@@ -167,8 +175,8 @@ export default function TransportationsPage() {
 
 	const editDefaults = editing
 		? {
-				originId: editing.origin?.id ?? "",
-				destinationId: editing.destination?.id ?? "",
+				originId: editing.origin?.id,
+				destinationId: editing.destination?.id,
 				type: editing.type,
 				operatingDays: editing.operatingDays ?? [],
 			}
@@ -204,15 +212,28 @@ export default function TransportationsPage() {
 							</Link>
 						</div>
 					) : (
-						<Table
-							rowKey="id"
-							size="small"
-							loading={query.isPending || locationsQuery.isPending}
-							columns={columns}
-							dataSource={filtered}
-							pagination={{ pageSize: 10, showSizeChanger: true }}
-							scroll={{ x: "max-content" }}
-						/>
+						<>
+							<Table
+								rowKey="id"
+								size="small"
+								loading={query.isPending || locationsQuery.isPending}
+								columns={columns}
+								dataSource={pagedData}
+								pagination={false}
+								scroll={{ x: "max-content" }}
+							/>
+							<div className="mt-3 flex justify-end">
+								<RangePagination
+									current={current}
+									pageSize={pageSize}
+									total={filtered.length}
+									onChange={(p, ps) => {
+										setCurrent(p);
+										setPageSize(ps);
+									}}
+								/>
+							</div>
+						</>
 					)}
 				</CardContent>
 			</Card>

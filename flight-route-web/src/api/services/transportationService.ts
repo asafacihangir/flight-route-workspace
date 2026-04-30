@@ -7,16 +7,16 @@ export enum TransportationApi {
 
 const list = () => apiClient.get<Transportation[]>({ url: TransportationApi.Transportations });
 
-const findById = (id: string) =>
+const findById = (id: number) =>
 	apiClient.get<Transportation>({ url: `${TransportationApi.Transportations}/${id}` });
 
 const create = (data: TransportationCreateInput) =>
 	apiClient.post<Transportation>({ url: TransportationApi.Transportations, data });
 
-const update = (id: string, data: TransportationUpdateInput) =>
+const update = (id: number, data: TransportationUpdateInput) =>
 	apiClient.put<Transportation>({ url: `${TransportationApi.Transportations}/${id}`, data });
 
-const remove = (id: string) =>
+const remove = (id: number) =>
 	apiClient.delete<void>({ url: `${TransportationApi.Transportations}/${id}` });
 
 export default {
